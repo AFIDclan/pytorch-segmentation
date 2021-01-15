@@ -33,7 +33,7 @@ class Resize(object):
 
     def __call__(self, image, target):
         image = F.resize(image, self.size)
-        target = F.resize(target, self.size, interpolation=Image.NEAREST)
+        target = F.resize(target, self.size, interpolation=F.InterpolationMode.NEAREST)
         return image, target
 
 
@@ -47,7 +47,7 @@ class RandomResize(object):
     def __call__(self, image, target):
         size = random.randint(self.min_size, self.max_size)
         image = F.resize(image, size)
-        target = F.resize(target, size, interpolation=Image.NEAREST)
+        target = F.resize(target, size, interpolation=F.InterpolationMode.NEAREST)
         return image, target
 
 
@@ -87,8 +87,8 @@ class CenterCrop(object):
 
 class ToTensor(object):
     def __call__(self, image, target):
-        image = F.to_tensor(image)
-        target = torch.as_tensor(np.asarray(target), dtype=torch.int64)
+        image = F.to_tensor(np.array(image))
+        target = torch.as_tensor(np.array(target), dtype=torch.int64)
         return image, target
 
 
